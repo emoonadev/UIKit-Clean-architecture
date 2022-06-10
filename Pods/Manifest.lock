@@ -1,0 +1,16 @@
+PODS:
+  - ViewControllerPresentationSpy (5.0.0)
+
+DEPENDENCIES:
+  - ViewControllerPresentationSpy
+
+SPEC REPOS:
+  trunk:
+    - ViewControllerPresentationSpy
+
+SPEC CHECKSUMS:
+  ViewControllerPresentationSpy: 7cfa8ef8ec9fa197ea58ee6e9ac72bbe5442281b
+
+PODFILE CHECKSUM: 4ac18c877480bb23e23e12251f8bd7655c19bc4a
+
+COCOAPODS: 1.11.2
