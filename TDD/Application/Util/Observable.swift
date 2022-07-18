@@ -56,6 +56,10 @@ public class Observable<Input> {
             self._value = newValue
         }
     }
+    
+    func notify() {
+        notifyObservers(value)
+    }
 
     private func notifyObservers(_ value: Input) {
         DispatchQueue.main.async {

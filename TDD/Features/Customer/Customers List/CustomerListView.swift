@@ -4,22 +4,15 @@
 
 import UIKit
 
-protocol CustomerListViewResponsder: AnyObject {
-    func addDidClick()
-    func customerDidClick(_ customer: Customer)
-}
-
 class CustomerListView: UIView {
 
-    weak var delegate: CustomerListViewResponsder?
     weak var viewState: CustomerListViewState?
 
-    var tableView: UITableView = UITableView(frame: .zero)
-    lazy var addCustomerBtn: UIBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: .init { [weak self] _ in self?.delegate?.addDidClick() })
+    var tableView: UITableView = .init(frame: .zero)
+    lazy var addCustomerBtn: UIBarButtonItem = .init(systemItem: .add, primaryAction: .init { [weak self] _ in self?.viewState?.$addBtnDidClick.notify() })
     var tableViewDatasource: (UITableViewDelegate & UITableViewDataSource)?
 
-    required init(delegate: CustomerListViewResponsder, viewState: CustomerListViewState) {
-        self.delegate = delegate
+    required init(viewState: CustomerListViewState) {
         self.viewState = viewState
         super.init(frame: .zero)
         applyViewCode()
@@ -63,9 +56,9 @@ extension CustomerListView: ViewCodeConfiguration {
         tableViewDatasource = TableViewDataSourceProvider(items: viewState.customers, cell: CustomerTableViewCell.self) { _, item, cell in
             cell.customer = item
         }
-                .didSelectedItemAt { _, _, _, customer in
-                    self.delegate?.customerDidClick(customer)
-                }
+        .didSelectedItemAt { _, _, _, customer in
+            self.viewState?.lastSelectedCustomer = customer
+        }
 
         tableView.dataSource = tableViewDatasource
         tableView.delegate = tableViewDatasource

@@ -5,20 +5,15 @@
 import UIKit
 import SnapKit
 
-protocol AddCustomerViewResponder: AnyObject {
-    func doneActionDidClick(with name: String)
-    func cancelActionDidClick()
-}
-
 class AddCustomerView: UIView {
-    weak var delegate: AddCustomerViewResponder?
+    var state: AddCustomerViewStateService?
 
     var nameTextField: UITextField = UITextField(frame: .zero)
     lazy var doneBtn: UIButton = UIButton(configuration: .plain(), primaryAction: .init { [weak self] _ in self?.doneAction() })
     lazy var dismissBtn: UIButton = UIButton(configuration: .plain(), primaryAction: .init { [weak self] _ in self?.cancelAction() })
 
-    required init(delegate: AddCustomerViewResponder) {
-        self.delegate = delegate
+    required init(state: AddCustomerViewStateService) {
+        self.state = state
         super.init(frame: .zero)
         applyViewCode()
     }
@@ -34,11 +29,11 @@ class AddCustomerView: UIView {
     }
 
     func doneAction() {
-        delegate?.doneActionDidClick(with: nameTextField.text ?? "")
+        state?.customerNameToCreate.value = nameTextField.text ?? ""
     }
 
     func cancelAction() {
-        delegate?.cancelActionDidClick()
+        state?.cancelActionDidClick.notify()
     }
 }
 

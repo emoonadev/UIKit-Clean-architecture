@@ -27,21 +27,37 @@ extension CustomersListViewModel: EMEventCenterDelegate {
 
     func setup() {
         EMEventCenter.shared.addObserver(self)
+        bindViewState()
     }
 
     func appDataSynced() {
         loadCustomers()
     }
+    
+    func bindViewState() {
+        viewState.$addBtnDidClick.observe(on: self) { (self, _) in
+            self.openCreateCustomerScreen()
+        }
+        
+        viewState.$lastSelectedCustomer.observe(on: self) { (self, customer) in
+            guard let customer = customer else { return }
+            self.openProfileScreen(of: customer)
+        }
+    }
+    
+    func initVC() {
+        loadCustomers()
+    }
+    
+    private func loadCustomers() {
+        viewState.customers.value = customerRepository.getLocalCustomers()
+    }
 
 }
 
-// MARK: UI Interaction/ data
+// MARK: UI Interaction / data
 
-extension CustomersListViewModel {
-
-    func loadCustomers() {
-        viewState.customers.value = customerRepository.getLocalCustomers()
-    }
+private extension CustomersListViewModel {
 
     func openProfileScreen(of customer: Customer) {
         router.openProfile(of: customer)

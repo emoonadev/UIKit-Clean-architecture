@@ -6,7 +6,7 @@ import Foundation
 
 extension DependencyFactory {
 
-    public override func registerDependencies() {
+    override public func registerDependencies() {
         registerServices()
         registerRepositories()
         registerViewModels()
@@ -35,6 +35,7 @@ extension DependencyFactory {
 
     private func registerViewStates() {
         register { r in r.autoResolve(CustomerListViewState.init) }
+        register(AddCustomerViewStateService.self) { r in r.autoResolve(AddCustomerViewState.init) }
     }
 
     private func registerCoordinators() {

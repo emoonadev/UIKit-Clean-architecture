@@ -6,4 +6,7 @@ import Foundation
 
 class CustomerListViewState {
     let customers: Observable<[Customer]> = Observable([])
+    @Observable(nil) var addBtnDidClick: (() -> ())?
+    @Observable(nil) var lastSelectedCustomer: Customer?
+    
 }

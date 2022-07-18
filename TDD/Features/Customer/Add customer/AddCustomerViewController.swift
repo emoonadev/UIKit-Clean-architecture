@@ -6,7 +6,7 @@ import UIKit
 
 class AddCustomerViewController: UIViewController {
 
-    lazy var routView = AddCustomerView(delegate: self)
+    lazy var routView = AddCustomerView(state: viewModel.viewState)
     @Resolve var viewModel: AddCustomerViewModel
 
     // MARK: Lifecycle
@@ -31,20 +31,6 @@ extension AddCustomerViewController {
         view.backgroundColor = .white
         handleNavigation(viewModel.router())
         viewModel.$error.observe(on: self) { (self, error) in self.showAlert(error: error) }
-    }
-
-}
-
-// MARK: - View delegate methods
-
-extension AddCustomerViewController: AddCustomerViewResponder {
-
-    func doneActionDidClick(with name: String) {
-        viewModel.createCustomer(with: name)
-    }
-
-    func cancelActionDidClick() {
-        dismiss(animated: true)
     }
 
 }
