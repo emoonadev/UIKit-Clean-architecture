@@ -7,9 +7,6 @@ import Foundation
 struct KString {
     let error = "Error"
     let done = "Done"
-
-    let customersListViewControllerToAddCustomerViewController = "CustomersListViewController.AddCustomerViewController"
-    let customersListViewControllerToCustomerProfileViewController = "CustomersListViewController.CustomerProfileViewController"
 }
 
 extension String {

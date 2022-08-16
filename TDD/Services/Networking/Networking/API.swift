@@ -42,7 +42,7 @@ extension API {
         return try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<Void, Error>) in
             networking.request(url: req.url, method: req.method, headers: req.headers, body: req.body) { (response: URLResponse?, result: Result<Nothing, Error>) in
                 switch result {
-                    case .success(let response):
+                case .success(_):
                         continuation.resume(returning: ())
                     case .failure(let error):
                         continuation.resume(throwing: error)
